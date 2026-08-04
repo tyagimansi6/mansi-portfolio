@@ -1,0 +1,235 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: calc(var(--header-h) + 3rem) 0 5rem;
+  overflow: hidden;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent-grad);
+  opacity: 0.45;
+  filter: blur(0.2px);
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+.copy {
+  max-width: 38rem;
+}
+
+.eyebrow {
+  color: var(--primary);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  margin-bottom: 0.85rem;
+}
+
+.title {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.role {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.roleText {
+  min-width: 1ch;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  margin-left: 0.15rem;
+  background: var(--primary);
+  animation: blink 1s step-end infinite;
+}
+
+.lead {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.link {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.link:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  color: var(--primary);
+  box-shadow: var(--shadow-hover);
+}
+
+.link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.visual {
+  display: grid;
+  place-items: center;
+}
+
+.orb {
+  position: relative;
+  width: min(320px, 70vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.orbRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-hover);
+  animation: float 6s ease-in-out infinite;
+}
+
+.orbCore {
+  position: relative;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-grad);
+  color: #fff;
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 800;
+  box-shadow: 0 20px 50px rgba(79, 70, 229, 0.35);
+}
+
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 1;
+  animation: bob 2.2s ease-in-out infinite;
+}
+
+.scrollHint svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret,
+  .orbRing,
+  .scrollHint {
+    animation: none;
+  }
+
+  .link:hover {
+    transform: none;
+  }
+}

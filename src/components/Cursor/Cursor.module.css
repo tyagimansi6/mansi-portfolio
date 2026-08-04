@@ -1,0 +1,64 @@
+.root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.ring,
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  will-change: transform;
+  transition:
+    opacity 0.2s var(--ease),
+    width 0.25s var(--ease),
+    height 0.25s var(--ease),
+    margin 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cursor-ring);
+  transition-property: opacity, width, height, margin, border-color, background;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--cursor-dot);
+}
+
+.visible {
+  opacity: 1;
+}
+
+.ringHover {
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+:global(html.custom-cursor),
+:global(html.custom-cursor body),
+:global(html.custom-cursor a),
+:global(html.custom-cursor button) {
+  cursor: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    display: none;
+  }
+}

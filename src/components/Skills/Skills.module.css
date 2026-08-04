@@ -1,0 +1,70 @@
+.skills {
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card {
+  padding: 1.6rem 1.5rem 1.4rem;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.card:hover {
+  transform: none;
+}
+
+.category {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.bars {
+  display: grid;
+  gap: 1rem;
+}
+
+.barRow {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.barMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.92rem;
+  font-weight: 550;
+  color: var(--text);
+}
+
+.barMeta span:last-child {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  height: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--border));
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-grad);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,58 @@
+.achievements {
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.card {
+  padding: 1.6rem 1.45rem;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.icon {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  background: var(--accent-soft);
+  color: var(--primary);
+  border: 1px solid var(--border);
+}
+
+.icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.title {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.55rem;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: 0.96rem;
+}
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1040px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
