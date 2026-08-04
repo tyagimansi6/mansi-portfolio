@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiCheckCircle, FiExternalLink, FiFileText } from 'react-icons/fi';
+import { FiCheckCircle, FiFileText } from 'react-icons/fi';
 import { certifications } from '../../data/content';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -55,17 +55,6 @@ export default function Certifications() {
                     View Certificate
                   </a>
                 ) : null}
-                {featured.verifyUrl ? (
-                  <a
-                    href={featured.verifyUrl}
-                    className="btn btn--ghost"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FiExternalLink aria-hidden="true" />
-                    Verify Cisco
-                  </a>
-                ) : null}
               </div>
             </div>
             <div className={styles.badgeWrap}>
@@ -101,7 +90,36 @@ export default function Certifications() {
                 </span>
               </div>
               <h3 className={styles.cardTitle}>{item.title}</h3>
+              {item.completedDate ? (
+                <p className={styles.status}>{item.completedDate}</p>
+              ) : null}
               <p className={styles.description}>{item.description}</p>
+              {item.badge || item.certificatePdf ? (
+                <div className={styles.cardFooter}>
+                  {item.badge ? (
+                    <img
+                      src={item.badge}
+                      alt={`${item.title} badge`}
+                      className={styles.cardBadge}
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : null}
+                  {item.certificatePdf ? (
+                    <a
+                      href={item.certificatePdf}
+                      className="btn btn--primary"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FiFileText aria-hidden="true" />
+                      View Certificate
+                    </a>
+                  ) : null}
+                </div>
+              ) : null}
             </motion.article>
           ))}
         </div>

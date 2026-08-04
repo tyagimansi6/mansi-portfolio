@@ -1,56 +1,86 @@
 import { useEffect, useState } from 'react';
 
-const DEFAULT_ROOT_MARGIN = '-40% 0px -50% 0px';
-const DEFAULT_THRESHOLD = [0, 0.25, 0.5, 0.75, 1];
+function readHeaderOffset() {
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue('--header-h')
+    .trim();
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : 76;
+}
 
-export function useActiveSection(sectionIds = [], options = {}) {
+/**
+ * Tracks which section is active under a fixed navbar by finding the
+ * last section whose top has crossed just below the header.
+ */
+export function useActiveSection(sectionIds = []) {
   const [activeId, setActiveId] = useState(sectionIds[0] ?? '');
   const idsKey = Array.isArray(sectionIds) ? sectionIds.join('|') : '';
-  const rootMargin = options.rootMargin ?? DEFAULT_ROOT_MARGIN;
-  const threshold = options.threshold ?? DEFAULT_THRESHOLD;
 
   useEffect(() => {
     const ids = idsKey ? idsKey.split('|') : [];
     if (!ids.length) return undefined;
 
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    let frame = 0;
 
-    if (!elements.length) return undefined;
+    const updateActive = () => {
+      const present = ids
+        .map((id) => {
+          const el = document.getElementById(id);
+          return el ? { id, el } : null;
+        })
+        .filter(Boolean);
 
-    const ratios = new Map();
+      if (!present.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          ratios.set(
-            entry.target.id,
-            entry.isIntersecting ? entry.intersectionRatio : 0,
-          );
-        });
+      if (window.scrollY < 24) {
+        setActiveId(present[0].id);
+        return;
+      }
 
-        let nextId = ids[0];
-        let bestRatio = -1;
+      const line = readHeaderOffset() + 8;
+      let current = present[0].id;
 
-        ids.forEach((id) => {
-          const ratio = ratios.get(id) ?? 0;
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            nextId = id;
-          }
-        });
-
-        if (bestRatio > 0) {
-          setActiveId(nextId);
+      present.forEach(({ id, el }) => {
+        if (el.getBoundingClientRect().top <= line) {
+          current = id;
         }
-      },
-      { rootMargin, threshold },
-    );
+      });
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [idsKey, rootMargin, threshold]);
+      // When near the page bottom, keep the last available section active
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      if (docHeight - scrollBottom < 100) {
+        current = present[present.length - 1].id;
+      }
+
+      setActiveId(current);
+    };
+
+    const onScrollOrResize = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(updateActive);
+    };
+
+    updateActive();
+
+    const mutationObserver = new MutationObserver(() => {
+      updateActive();
+    });
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      mutationObserver.disconnect();
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
+    };
+  }, [idsKey]);
 
   return activeId;
 }

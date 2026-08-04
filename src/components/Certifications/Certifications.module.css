@@ -134,6 +134,23 @@
   margin-bottom: 0.55rem;
 }
 
+.cardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.cardBadge {
+  width: 72px;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  box-shadow: var(--shadow);
+}
+
 .ongoing {
   border-color: color-mix(in srgb, var(--secondary) 35%, var(--border));
 }

@@ -151,7 +151,11 @@ export default function Hero() {
           <div className={styles.orb}>
             <div className={styles.orbRing} aria-hidden="true" />
             <div className={styles.orbCore}>
-              <span>{site.brand.charAt(0)}</span>
+              <img
+                className={styles.orbPhoto}
+                src="/assets/images/profile-photo.png"
+                alt="Mansi Tyagi - Computer Science Engineering student"
+              />
             </div>
           </div>
         </motion.div>

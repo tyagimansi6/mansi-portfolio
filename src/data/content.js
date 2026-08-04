@@ -197,15 +197,29 @@ export const certifications = [
     verified: true,
     badge: '/assets/certificates/networking-basics.png',
     certificatePdf: '/assets/certificates/networking-basics-certificate.pdf',
-    verifyUrl: 'https://www.netacad.com/',
   },
   {
-    id: 'cyber-security',
-    title: 'Cyber Security Course',
-    organization: 'Cyber Security',
-    status: 'Ongoing',
-    description: 'Learning core security practices and threat awareness.',
+    id: 'cisco-python-essentials-1',
+    title: 'Cisco Networking Academy – Python Essentials 1',
+    organization: 'Cisco Networking Academy',
+    status: 'Completed',
+    completedDate: '04 August 2026',
+    description:
+      'Successfully completed the Cisco Networking Academy Python Essentials 1 course, offered by ABES Engineering College through the Cisco Networking Academy program.',
     featured: false,
+    certificatePdf: '/assets/certificates/python-essentials-1-certificate.pdf',
+  },
+  {
+    id: 'cisco-python-essentials-2',
+    title: 'Cisco Networking Academy – Python Essentials 2',
+    organization: 'Cisco Networking Academy',
+    status: 'Completed',
+    completedDate: '04 August 2026',
+    description:
+      'Successfully completed the Cisco Networking Academy Python Essentials 2 course through the Cisco Networking Academy program.',
+    featured: false,
+    badge: '/assets/certificates/python-essentials-2.png',
+    certificatePdf: '/assets/certificates/python-essentials-2-certificate.pdf',
   },
   {
     id: 'siemens-pm',
@@ -214,6 +228,7 @@ export const certifications = [
     status: 'Completed',
     description: 'Hands-on simulation covering planning and delivery fundamentals.',
     featured: false,
+    certificatePdf: '/assets/certificates/forage.pdf',
   },
 ];
 
