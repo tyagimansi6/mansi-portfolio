@@ -100,8 +100,6 @@ export const projects = [
     tags: ['Profiles', 'Collaboration', 'Social'],
     categories: ['Full Stack'],
     featured: true,
-    liveUrl: 'https://github.com/tyagimansi6',
-    sourceUrl: 'https://github.com/tyagimansi6',
   },
   {
     id: 'expense-tracker',
@@ -111,8 +109,6 @@ export const projects = [
     tags: ['Analytics', 'Charts', 'Responsive'],
     categories: ['Frontend', 'JavaScript'],
     featured: false,
-    liveUrl: 'https://github.com/tyagimansi6',
-    sourceUrl: 'https://github.com/tyagimansi6',
   },
   {
     id: 'task-tracker',
@@ -122,8 +118,6 @@ export const projects = [
     tags: ['CRUD', 'Responsive', 'Modern UI'],
     categories: ['Frontend', 'JavaScript'],
     featured: false,
-    liveUrl: 'https://github.com/tyagimansi6',
-    sourceUrl: 'https://github.com/tyagimansi6',
   },
   {
     id: 'portfolio',
@@ -133,8 +127,6 @@ export const projects = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     categories: ['Frontend', 'React', 'JavaScript'],
     featured: false,
-    liveUrl: '#home',
-    sourceUrl: 'https://github.com/tyagimansi6',
   },
 ];
 

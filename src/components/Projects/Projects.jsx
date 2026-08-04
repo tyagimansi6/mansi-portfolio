@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub } from 'react-icons/fi';
 import { projectFilters, projects } from '../../data/content';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -46,27 +45,6 @@ function ProjectCard({ project, featured = false, index = 0 }) {
           <li key={tag}>{tag}</li>
         ))}
       </ul>
-      <div className={styles.actions}>
-        <a
-          href={project.liveUrl}
-          className="btn btn--primary"
-          {...(project.liveUrl.startsWith('http')
-            ? { target: '_blank', rel: 'noopener noreferrer' }
-            : {})}
-        >
-          <FiExternalLink aria-hidden="true" />
-          Live
-        </a>
-        <a
-          href={project.sourceUrl}
-          className="btn btn--ghost"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FiGithub aria-hidden="true" />
-          Source
-        </a>
-      </div>
     </motion.article>
   );
 }
