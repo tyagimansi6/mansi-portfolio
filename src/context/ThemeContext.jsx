@@ -11,7 +11,7 @@ const STORAGE_KEY = 'portfolio-theme';
 const ThemeContext = createContext(null);
 
 function getPreferredTheme() {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
 
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -20,9 +20,7 @@ function getPreferredTheme() {
     /* ignore storage errors */
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  return 'dark';
 }
 
 function applyTheme(theme) {

@@ -17,8 +17,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--primary) 28%, transparent),
-    color-mix(in srgb, var(--secondary) 16%, transparent),
+    color-mix(in srgb, var(--primary) 26%, transparent),
+    color-mix(in srgb, var(--secondary) 14%, transparent),
     transparent 70%
   );
   filter: blur(28px);
@@ -38,13 +38,13 @@
   height: 3rem;
   display: grid;
   place-items: center;
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--accent-grad);
   color: #fff;
   font-family: var(--display);
   font-weight: 700;
   font-size: 1.35rem;
-  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.28);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.32);
 }
 
 .name {
@@ -52,10 +52,7 @@
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 700;
   letter-spacing: -0.04em;
-  background: var(--accent-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
 }
 
 .track {
@@ -74,13 +71,16 @@
   transform-origin: left center;
   background: var(--accent-grad);
   border-radius: inherit;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--primary) 50%, transparent);
 }
 
 .caption {
   position: relative;
   color: var(--text-muted);
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--mono);
 }
 
 @keyframes pulse {

@@ -9,14 +9,18 @@
     border-color 0.3s var(--ease),
     backdrop-filter 0.3s var(--ease);
   border-bottom: 1px solid transparent;
+  background: color-mix(in srgb, var(--bg) 35%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .scrolled {
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom-color: var(--border);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 80%, transparent), var(--shadow);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 80%, transparent),
+    0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .inner {
@@ -43,10 +47,10 @@
   display: grid;
   place-items: center;
   border-radius: 10px;
-  background: var(--primary);
+  background: var(--accent-grad);
   color: #fff;
   font-size: 1rem;
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.22);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.28);
 }
 
 .name {
@@ -57,34 +61,39 @@
   display: none;
   align-items: center;
   gap: 0.1rem;
+  padding: 0.25rem;
+  border-radius: 14px;
+  border: 1px solid transparent;
 }
 
 .link {
   position: relative;
-  padding: 0.4rem 0.65rem;
-  font-size: 0.84rem;
+  padding: 0.42rem 0.68rem;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--text-muted);
-  border-radius: 8px;
+  border-radius: 9px;
   transition: color 0.25s var(--ease), background 0.25s var(--ease);
 }
 
 .link::after {
   content: '';
   position: absolute;
-  left: 0.65rem;
-  right: 0.65rem;
-  bottom: 0.15rem;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.18rem;
   height: 2px;
   border-radius: 999px;
-  background: var(--primary);
+  background: var(--accent-grad);
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 .link:hover {
   color: var(--text);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
 .link.active {
@@ -112,6 +121,7 @@
   background: color-mix(in srgb, var(--surface-solid) 85%, transparent);
   color: var(--text);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
 }
 
 .menuBtn svg {
@@ -122,11 +132,12 @@
 .mobile {
   position: fixed;
   inset: var(--header-h) 0 0;
-  background: color-mix(in srgb, var(--bg) 96%, transparent);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
   padding: 1rem 1.25rem 2rem;
   overflow-y: auto;
+  border-top: 1px solid var(--border);
 }
 
 .mobileNav {
@@ -154,8 +165,9 @@
 
 .mobileLink.active {
   background: var(--primary-soft);
-  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
   color: var(--primary);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 @media (min-width: 1080px) {

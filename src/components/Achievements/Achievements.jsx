@@ -24,35 +24,43 @@ export default function Achievements() {
           subtitle="Milestones from competitive programming, leadership, and internship shortlists."
         />
 
-        <div className={styles.grid}>
+        <div className={styles.timeline}>
           {achievements.map((item, index) => {
             const Icon = ICONS[item.id] ?? FaMedal;
             const featured = item.id === 'codechef-3star';
             return (
               <motion.article
                 key={item.id}
-                className={`glass-card ${styles.card} ${featured ? styles.featured : ''}`}
-                initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className={`${styles.item} ${featured ? styles.featured : ''}`}
+                initial={reducedMotion ? false : { opacity: 0, x: -18 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className={styles.icon} aria-hidden="true">
-                  <Icon />
+                <span className={styles.node} aria-hidden="true">
+                  <span className={styles.nodeCore} />
                 </span>
-                {featured ? <span className={styles.featuredBadge}>Featured</span> : null}
-                <h3 className={styles.title}>{item.title}</h3>
-                <p className={styles.description}>{item.description}</p>
-                {featured ? (
-                  <a
-                    href={site.codechef}
-                    className={styles.profileLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View CodeChef profile
-                  </a>
-                ) : null}
+
+                <div className={`glass-card ${styles.card}`}>
+                  <div className={styles.cardTop}>
+                    <span className={styles.icon} aria-hidden="true">
+                      <Icon />
+                    </span>
+                    {featured ? <span className={styles.featuredBadge}>Featured</span> : null}
+                  </div>
+                  <h3 className={styles.title}>{item.title}</h3>
+                  <p className={styles.description}>{item.description}</p>
+                  {featured ? (
+                    <a
+                      href={site.codechef}
+                      className={styles.profileLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View CodeChef profile
+                    </a>
+                  ) : null}
+                </div>
               </motion.article>
             );
           })}

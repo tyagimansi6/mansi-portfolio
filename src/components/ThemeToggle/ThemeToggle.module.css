@@ -2,7 +2,7 @@
   position: relative;
   width: 2.6rem;
   height: 2.6rem;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-solid) 80%, transparent);
   backdrop-filter: blur(10px);
@@ -12,7 +12,8 @@
   transition:
     border-color 0.25s var(--ease),
     transform 0.25s var(--ease),
-    background 0.25s var(--ease);
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .toggle:hover {
@@ -20,6 +21,7 @@
   transform: translateY(-1px);
   background: var(--primary-soft);
   color: var(--primary);
+  box-shadow: var(--glow-shadow);
 }
 
 .icon {

@@ -1,7 +1,8 @@
 .footer {
   border-top: 1px solid var(--border);
-  padding: 1.75rem 0 2rem;
-  background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
+  padding: 1.85rem 0 2.1rem;
+  background: color-mix(in srgb, var(--bg-elevated) 75%, transparent);
+  backdrop-filter: blur(12px);
 }
 
 .inner {
@@ -26,14 +27,17 @@
   display: grid;
   place-items: center;
   border-radius: 9px;
-  background: var(--primary);
+  background: var(--accent-grad);
   color: #fff;
   font-size: 0.9rem;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.25);
 }
 
 .copy {
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
 }
 
 .socials {
@@ -46,7 +50,7 @@
   height: 2.35rem;
   display: grid;
   place-items: center;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface-solid);
   color: var(--text);
@@ -54,13 +58,15 @@
   transition:
     transform 0.25s var(--ease),
     color 0.25s var(--ease),
-    border-color 0.25s var(--ease);
+    border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .socials a:hover {
   transform: translateY(-2px);
   color: var(--primary);
   border-color: var(--border-strong);
+  box-shadow: var(--glow-shadow);
 }
 
 @media (min-width: 780px) {

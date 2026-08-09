@@ -18,7 +18,8 @@
     height 0.25s var(--ease),
     margin 0.25s var(--ease),
     border-color 0.25s var(--ease),
-    background 0.25s var(--ease);
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .ring {
@@ -27,7 +28,8 @@
   margin: -18px 0 0 -18px;
   border-radius: 50%;
   border: 1.5px solid var(--cursor-ring);
-  transition-property: opacity, width, height, margin, border-color, background;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 18%, transparent);
+  transition-property: opacity, width, height, margin, border-color, background, box-shadow;
 }
 
 .dot {
@@ -36,6 +38,7 @@
   margin: -3px 0 0 -3px;
   border-radius: 50%;
   background: var(--cursor-dot);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) 55%, transparent);
 }
 
 .visible {
@@ -48,6 +51,7 @@
   margin: -26px 0 0 -26px;
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 10%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--primary) 28%, transparent);
 }
 
 :global(html.custom-cursor),

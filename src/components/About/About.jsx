@@ -6,18 +6,27 @@ import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import styles from './About.module.css';
 
-function Stat({ value, label, suffix }) {
+function Metric({ value, label, suffix, index = 0 }) {
   const { ref, inView } = useInViewOnce({ threshold: 0.4 });
   const display = useCountUp(value, { inView, decimals: Number.isInteger(value) ? 0 : 1 });
+  const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <div ref={ref} className={`glass-card ${styles.stat}`}>
-      <p className={styles.statValue}>
+    <motion.div
+      ref={ref}
+      className={`glass-card ${styles.metric}`}
+      initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <span className={styles.metricId}>SYS.{String(index + 1).padStart(2, '0')}</span>
+      <p className={styles.metricValue}>
         {display}
         {suffix}
       </p>
-      <p className={styles.statLabel}>{label}</p>
-    </div>
+      <p className={styles.metricLabel}>{label}</p>
+    </motion.div>
   );
 }
 
@@ -48,35 +57,38 @@ export default function About() {
             ))}
           </motion.div>
 
-          <motion.div
-            className={styles.aside}
-            initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className={styles.stats}>
-              {about.stats.map((stat) => (
-                <Stat
+          <div className={styles.aside}>
+            <div className={styles.metrics}>
+              {about.stats.map((stat, index) => (
+                <Metric
                   key={stat.label}
                   value={stat.value}
                   label={stat.label}
                   suffix={stat.suffix}
+                  index={index}
                 />
               ))}
-            </div>
 
-            {about.highlights?.length ? (
-              <div className={styles.highlights}>
-                {about.highlights.map((item) => (
-                  <div key={item.id} className={`glass-card ${styles.highlight}`}>
-                    <span className={styles.highlightValue}>{item.value}</span>
-                    <span className={styles.highlightLabel}>{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </motion.div>
+              {about.highlights?.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  className={`glass-card ${styles.metric} ${styles.highlight}`}
+                  initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: (about.stats.length + index) * 0.05,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <span className={styles.metricId}>SYS.HL</span>
+                  <p className={styles.metricValue}>{item.value}</p>
+                  <p className={styles.metricLabel}>{item.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

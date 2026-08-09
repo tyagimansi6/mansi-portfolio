@@ -1,57 +1,71 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaCode } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
-import { about, roles, site } from '../../data/content';
+import { about, site } from '../../data/content';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import styles from './Hero.module.css';
 
-function useTypingEffect(words, { enabled = true, typeSpeed = 70, deleteSpeed = 40, pause = 1600 } = {}) {
-  const [index, setIndex] = useState(0);
-  const [text, setText] = useState('');
-  const [deleting, setDeleting] = useState(false);
+const HERO_LINES = [
+  'Computer Science Student',
+  'Full-Stack Developer',
+  'AI Enthusiast',
+];
+
+const TERMINAL_LINES = [
+  'initializing portfolio...',
+  'loading projects...',
+  'loading skills...',
+  'system ready ✓',
+];
+
+function useTerminalLines(lines, { enabled = true, charSpeed = 28, linePause = 420 } = {}) {
+  const [visibleCount, setVisibleCount] = useState(enabled ? 0 : lines.length);
+  const [typed, setTyped] = useState(enabled ? '' : lines[lines.length - 1] ?? '');
 
   useEffect(() => {
-    if (!enabled || !words.length) {
-      setText(words[0] ?? '');
+    if (!enabled) {
+      setVisibleCount(lines.length);
+      setTyped(lines[lines.length - 1] ?? '');
       return undefined;
     }
 
-    const current = words[index % words.length];
-    let timer;
+    if (visibleCount >= lines.length) return undefined;
 
-    if (!deleting && text === current) {
-      timer = window.setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && text === '') {
-      setDeleting(false);
-      setIndex((value) => (value + 1) % words.length);
-    } else {
-      timer = window.setTimeout(
-        () => {
-          const next = deleting
-            ? current.slice(0, text.length - 1)
-            : current.slice(0, text.length + 1);
-          setText(next);
-        },
-        deleting ? deleteSpeed : typeSpeed,
-      );
+    const current = lines[visibleCount];
+    if (typed.length < current.length) {
+      const timer = window.setTimeout(() => {
+        setTyped(current.slice(0, typed.length + 1));
+      }, charSpeed);
+      return () => window.clearTimeout(timer);
     }
 
-    return () => window.clearTimeout(timer);
-  }, [words, index, text, deleting, enabled, typeSpeed, deleteSpeed, pause]);
+    const timer = window.setTimeout(() => {
+      setVisibleCount((count) => count + 1);
+      setTyped('');
+    }, linePause);
 
-  return text;
+    return () => window.clearTimeout(timer);
+  }, [lines, visibleCount, typed, enabled, charSpeed, linePause]);
+
+  return { visibleCount, typed };
 }
 
 export default function Hero() {
   const reducedMotion = usePrefersReducedMotion();
-  const typed = useTypingEffect(roles, { enabled: !reducedMotion });
-  const displayRole = reducedMotion ? roles[0] : typed;
+  const { visibleCount, typed } = useTerminalLines(TERMINAL_LINES, {
+    enabled: !reducedMotion,
+  });
 
   return (
     <section id="home" className={styles.hero}>
       <div className={styles.bgGrid} aria-hidden="true" />
       <div className={styles.bgGlow} aria-hidden="true" />
+      <div className={styles.particles} aria-hidden="true">
+        {Array.from({ length: 12 }).map((_, index) => (
+          <span key={index} className={styles.particle} style={{ '--i': index }} />
+        ))}
+      </div>
 
       <div className={`container ${styles.grid}`}>
         <motion.div
@@ -60,27 +74,38 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
-          {site.statusBadge ? (
-            <span className={styles.status}>{site.statusBadge}</span>
-          ) : null}
+          <span className={styles.status}>
+            <span className={styles.statusDot} aria-hidden="true" />
+            SYSTEM ONLINE
+          </span>
 
-          <p className={styles.eyebrow}>Hello, I&apos;m</p>
-          <h1 className={styles.title}>{site.name}</h1>
+          <h1 className={styles.title}>MANSI TYAGI</h1>
 
-          <p className={styles.positioning}>{site.positioning}</p>
-
-          <p className={styles.role}>
-            <span className={styles.roleText}>{displayRole}</span>
-            {!reducedMotion ? <span className={styles.caret} aria-hidden="true" /> : null}
-          </p>
+          <ul className={styles.roles}>
+            {HERO_LINES.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
 
           <p className={styles.lead}>{about.paragraphs[0]}</p>
 
           <div className={styles.ctas}>
             <a className="btn btn--primary" href="#projects">
-              View My Work
+              Explore Projects
             </a>
-            <a className="btn btn--ghost" href={site.resume} download>
+            <a
+              className="btn btn--ghost"
+              href={site.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Resume
+            </a>
+            <a
+              className="btn btn--ghost"
+              href={site.resume}
+              download="Mansi_Tyagi_Resume.pdf"
+            >
               <FiDownload aria-hidden="true" />
               Download Resume
             </a>
@@ -107,16 +132,6 @@ export default function Hero() {
             >
               <FaLinkedin aria-hidden="true" />
             </a>
-            <a
-              href={site.codechef}
-              className={`${styles.link} ${styles.linkMuted}`}
-              aria-label="CodeChef"
-              title="CodeChef"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaCode aria-hidden="true" />
-            </a>
           </div>
         </motion.div>
 
@@ -128,11 +143,35 @@ export default function Hero() {
         >
           <div className={styles.photoFrame}>
             <div className={styles.photoRing} aria-hidden="true" />
-            <img
-              className={styles.photo}
-              src="/assets/images/profile-photo.png"
-              alt="Mansi Tyagi - Computer Science Engineering student"
-            />
+            <div className={styles.photoGlass}>
+              <img
+                className={styles.photo}
+                src="/assets/images/profile-photo.png"
+                alt="Mansi Tyagi - Computer Science Engineering student"
+              />
+            </div>
+          </div>
+
+          <div className={styles.terminal} aria-label="System status terminal">
+            <div className={styles.terminalBar}>
+              <span />
+              <span />
+              <span />
+              <em>portfolio.exe</em>
+            </div>
+            <div className={styles.terminalBody}>
+              {TERMINAL_LINES.slice(0, visibleCount).map((line) => (
+                <p key={line} className={styles.terminalLine}>
+                  <span className={styles.prompt}>&gt;</span> {line}
+                </p>
+              ))}
+              {visibleCount < TERMINAL_LINES.length ? (
+                <p className={styles.terminalLine}>
+                  <span className={styles.prompt}>&gt;</span> {typed}
+                  {!reducedMotion ? <span className={styles.caret} aria-hidden="true" /> : null}
+                </p>
+              ) : null}
+            </div>
           </div>
         </motion.div>
       </div>

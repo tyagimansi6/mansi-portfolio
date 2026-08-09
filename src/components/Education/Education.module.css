@@ -23,7 +23,7 @@
 .item.active {
   border-color: var(--border-strong);
   box-shadow: var(--shadow-hover);
-  background: color-mix(in srgb, var(--surface-solid) 92%, var(--primary) 8%);
+  background: color-mix(in srgb, var(--surface-solid) 88%, var(--primary) 12%);
 }
 
 .dot {
@@ -32,7 +32,9 @@
 
 .item.active .dot {
   transform: scale(1.2);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 22%, transparent);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--primary) 22%, transparent),
+    0 0 18px color-mix(in srgb, var(--primary) 45%, transparent);
 }
 
 .desc {

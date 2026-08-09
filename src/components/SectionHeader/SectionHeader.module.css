@@ -1,6 +1,6 @@
 .header {
   text-align: center;
-  margin-bottom: 2.75rem;
+  margin-bottom: 3rem;
 }
 
 .left {
@@ -13,24 +13,24 @@
 
 .eyebrow {
   color: var(--primary);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
 }
 
 .title {
   font-family: var(--display);
-  font-size: clamp(1.85rem, 3.6vw, 2.45rem);
+  font-size: clamp(1.95rem, 3.8vw, 2.65rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   color: var(--text);
-  line-height: 1.2;
+  line-height: 1.18;
 }
 
 .subtitle {
-  margin-top: 0.65rem;
+  margin-top: 0.75rem;
   color: var(--text-muted);
   max-width: 38rem;
   margin-inline: auto;

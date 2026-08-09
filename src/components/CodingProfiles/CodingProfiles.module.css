@@ -17,7 +17,8 @@
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
 
 .icon {
@@ -25,10 +26,10 @@
   height: 3rem;
   display: grid;
   place-items: center;
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--accent-grad);
   color: #fff;
-  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.28);
 }
 
 .icon svg {
@@ -53,6 +54,7 @@
   color: var(--primary);
   font-size: 0.88rem;
   font-weight: 600;
+  font-family: var(--mono);
 }
 
 .external {

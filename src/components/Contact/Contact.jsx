@@ -76,7 +76,7 @@ export default function Contact() {
       <div className="container">
         <SectionHeader
           eyebrow="Contact"
-          title="Let's build something together."
+          title="LET'S BUILD SOMETHING TOGETHER."
           subtitle="Have a role, project, or collaboration in mind? Send a note."
         />
 
