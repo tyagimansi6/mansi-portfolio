@@ -20,15 +20,22 @@ function getPreferredTheme() {
     /* ignore storage errors */
   }
 
+  // Fresh visit with no saved preference → dark mode
   return 'dark';
 }
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.style.colorScheme = theme;
 }
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => getPreferredTheme());
+  const [theme, setThemeState] = useState(() => {
+    const initial = getPreferredTheme();
+    // Apply immediately so the first React paint matches the chosen theme
+    applyTheme(initial);
+    return initial;
+  });
 
   useEffect(() => {
     applyTheme(theme);
