@@ -1,98 +1,100 @@
-import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import {
+  SiCplusplus,
+  SiCss,
+  SiExpress,
+  SiFigma,
+  SiGit,
+  SiGithub,
+  SiHtml5,
+  SiJavascript,
+  SiNodedotjs,
+  SiPython,
+  SiReact,
+} from 'react-icons/si';
+import { FaCode, FaCubes } from 'react-icons/fa';
 import { skills } from '../../data/content';
-import useInViewOnce from '../../hooks/useInViewOnce';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import styles from './Skills.module.css';
 
-function SkillBar({ name, level, animate }) {
-  return (
-    <div className={styles.barRow}>
-      <div className={styles.barMeta}>
-        <span>{name}</span>
-        <span>{level}%</span>
-      </div>
-      <div className={styles.track}>
-        <motion.div
-          className={styles.fill}
-          initial={{ width: 0 }}
-          animate={{ width: animate ? `${level}%` : 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-    </div>
-  );
-}
+const ICONS = {
+  'C++': SiCplusplus,
+  Python: SiPython,
+  JavaScript: SiJavascript,
+  HTML: SiHtml5,
+  CSS: SiCss,
+  React: SiReact,
+  'Node.js': SiNodedotjs,
+  'Express.js': SiExpress,
+  Git: SiGit,
+  GitHub: SiGithub,
+  Figma: SiFigma,
+  DSA: FaCode,
+  OOP: FaCubes,
+};
 
-function SkillCard({ category, items, index }) {
+function SkillChip({ name, level, index }) {
+  const Icon = ICONS[name] ?? FaCode;
   const reducedMotion = usePrefersReducedMotion();
-  const { ref, inView } = useInViewOnce({ threshold: 0.3 });
-  const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const onMove = (event) => {
-    if (reducedMotion || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width;
-    const py = (event.clientY - rect.top) / rect.height;
-    setTilt({
-      x: (0.5 - py) * 10,
-      y: (px - 0.5) * 12,
-    });
-  };
-
-  const onLeave = () => setTilt({ x: 0, y: 0 });
 
   return (
-    <motion.article
-      ref={(node) => {
-        cardRef.current = node;
-        ref.current = node;
-      }}
-      className={`glass-card ${styles.card}`}
-      style={{
-        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+    <motion.div
+      className={styles.chip}
+      initial={reducedMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
     >
-      <h3 className={styles.category}>{category}</h3>
-      <div className={styles.bars}>
-        {items.map((item) => (
-          <SkillBar
-            key={item.name}
-            name={item.name}
-            level={item.level}
-            animate={inView && !reducedMotion ? true : inView}
-          />
-        ))}
+      <span className={styles.icon} aria-hidden="true">
+        <Icon />
+      </span>
+      <div className={styles.chipBody}>
+        <div className={styles.chipMeta}>
+          <span className={styles.chipName}>{name}</span>
+          <span className={styles.chipLevel}>{level}%</span>
+        </div>
+        <div className={styles.track} aria-hidden="true">
+          <span className={styles.fill} style={{ width: `${level}%` }} />
+        </div>
       </div>
-    </motion.article>
+    </motion.div>
   );
 }
 
 export default function Skills() {
+  const reducedMotion = usePrefersReducedMotion();
+
   return (
     <section id="skills" className={`section ${styles.skills}`}>
       <div className="container">
         <SectionHeader
           eyebrow="Skills"
           title="What I work with"
-          subtitle="A mix of frontend craft, core languages, and tools I use every day."
+          subtitle="Languages, frontend, backend, and tools grouped for a clearer view of my stack."
         />
         <div className={styles.grid}>
-          {skills.map((group, index) => (
-            <SkillCard
+          {skills.map((group, groupIndex) => (
+            <motion.article
               key={group.category}
-              category={group.category}
-              items={group.items}
-              index={index}
-            />
+              className={`glass-card ${styles.card}`}
+              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: groupIndex * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <h3 className={styles.category}>{group.category}</h3>
+              <div className={styles.chips}>
+                {group.items.map((item, index) => (
+                  <SkillChip
+                    key={`${group.category}-${item.name}`}
+                    name={item.name}
+                    level={item.level}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>

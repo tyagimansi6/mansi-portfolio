@@ -12,11 +12,11 @@
 }
 
 .scrolled {
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom-color: var(--border);
-  box-shadow: var(--shadow);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 80%, transparent), var(--shadow);
 }
 
 .inner {
@@ -30,7 +30,7 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.65rem;
   font-family: var(--display);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -38,96 +38,123 @@
 }
 
 .mark {
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.2rem;
+  height: 2.2rem;
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  background: var(--accent-grad);
+  border-radius: 10px;
+  background: var(--primary);
   color: #fff;
-  font-size: 1.05rem;
-  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+  font-size: 1rem;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.22);
 }
 
 .name {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
 .nav {
   display: none;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.1rem;
 }
 
 .link {
   position: relative;
-  padding: 0.45rem 0.7rem;
-  font-size: 0.88rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.84rem;
   font-weight: 500;
   color: var(--text-muted);
-  border-radius: 999px;
+  border-radius: 8px;
   transition: color 0.25s var(--ease), background 0.25s var(--ease);
 }
 
-.link:hover,
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 0.15rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s var(--ease);
+}
+
+.link:hover {
+  color: var(--text);
+}
+
 .link.active {
   color: var(--primary);
-  background: var(--primary-soft);
+}
+
+.link.active::after {
+  transform: scaleX(1);
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
   z-index: 2;
 }
 
 .menuBtn {
   display: grid;
   place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-solid) 80%, transparent);
+  background: color-mix(in srgb, var(--surface-solid) 85%, transparent);
   color: var(--text);
   box-shadow: var(--shadow);
 }
 
 .menuBtn svg {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .mobile {
   position: fixed;
   inset: var(--header-h) 0 0;
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding: 1.25rem 1.5rem 2rem;
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1rem 1.25rem 2rem;
   overflow-y: auto;
 }
 
 .mobileNav {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  max-width: 28rem;
+  margin-inline: auto;
 }
 
 .mobileLink {
-  padding: 0.95rem 1.1rem;
+  padding: 0.9rem 1rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
+  font-size: 0.95rem;
   color: var(--text);
   background: transparent;
   border: 1px solid transparent;
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-.mobileLink:hover,
+.mobileLink:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
 .mobileLink.active {
   background: var(--primary-soft);
-  border-color: var(--border-strong);
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
   color: var(--primary);
 }
 

@@ -5,8 +5,82 @@ import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import styles from './Certifications.module.css';
 
-export default function Certifications() {
+function CertCard({ item, featured = false, index = 0 }) {
   const reducedMotion = usePrefersReducedMotion();
+
+  return (
+    <motion.article
+      className={`glass-card ${styles.card} ${featured ? styles.featured : ''} ${item.status === 'Ongoing' ? styles.ongoing : ''}`}
+      initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className={styles.body}>
+        <div className={styles.cardTop}>
+          <span className={styles.org}>{item.organization}</span>
+          <div className={styles.metaPills}>
+            {item.verified ? (
+              <span className={styles.verified}>
+                <FiCheckCircle aria-hidden="true" />
+                Verified
+              </span>
+            ) : null}
+            <span className={`${styles.pill} ${item.status === 'Ongoing' ? styles.pillPulse : ''}`}>
+              {item.status}
+            </span>
+          </div>
+        </div>
+
+        <h3 className={featured ? styles.featuredTitle : styles.cardTitle}>{item.title}</h3>
+
+        {item.completedDate ? <p className={styles.status}>{item.completedDate}</p> : null}
+
+        <p className={styles.description}>{item.description}</p>
+
+        <div className={styles.actions}>
+          {item.certificatePdf ? (
+            <a
+              href={item.certificatePdf}
+              className="btn btn--primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FiFileText aria-hidden="true" />
+              View Certificate
+            </a>
+          ) : null}
+          {item.verifyUrl ? (
+            <a
+              href={item.verifyUrl}
+              className="btn btn--ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Verify
+            </a>
+          ) : null}
+        </div>
+      </div>
+
+      {item.badge ? (
+        <div className={styles.badgeWrap}>
+          <img
+            src={item.badge}
+            alt={`${item.title} badge`}
+            className={featured ? styles.badge : styles.cardBadge}
+            loading="lazy"
+            onError={(event) => {
+              event.currentTarget.style.display = 'none';
+            }}
+          />
+        </div>
+      ) : null}
+    </motion.article>
+  );
+}
+
+export default function Certifications() {
   const featured = certifications.find((item) => item.featured);
   const rest = certifications.filter((item) => !item.featured);
 
@@ -16,112 +90,16 @@ export default function Certifications() {
         <SectionHeader
           eyebrow="Certifications"
           title="Credentials & learning"
-          subtitle="Verified coursework and ongoing professional development."
+          subtitle="Coursework and professional simulations with certificates available to view."
         />
 
-        {featured ? (
-          <motion.article
-            className={`glass-card ${styles.featured}`}
-            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className={styles.featuredCopy}>
-              <div className={styles.metaRow}>
-                <span className={styles.org}>{featured.organization}</span>
-                {featured.verified ? (
-                  <span className={styles.verified}>
-                    <FiCheckCircle aria-hidden="true" />
-                    Verified
-                  </span>
-                ) : null}
-              </div>
-              <h3 className={styles.featuredTitle}>{featured.title}</h3>
-              <p className={styles.status}>
-                {featured.status}
-                {featured.completedDate ? ` · ${featured.completedDate}` : ''}
-              </p>
-              <p className={styles.description}>{featured.description}</p>
-              <div className={styles.actions}>
-                {featured.certificatePdf ? (
-                  <a
-                    href={featured.certificatePdf}
-                    className="btn btn--primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FiFileText aria-hidden="true" />
-                    View Certificate
-                  </a>
-                ) : null}
-              </div>
-            </div>
-            <div className={styles.badgeWrap}>
-              <img
-                src={featured.badge}
-                alt={`${featured.title} badge`}
-                className={styles.badge}
-                loading="lazy"
-                onError={(event) => {
-                  event.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
-          </motion.article>
-        ) : null}
-
-        <div className={styles.grid}>
-          {rest.map((item, index) => (
-            <motion.article
-              key={item.id}
-              className={`glass-card ${styles.card} ${item.status === 'Ongoing' ? styles.ongoing : ''}`}
-              initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className={styles.cardTop}>
-                <span className={styles.org}>{item.organization}</span>
-                <span
-                  className={`${styles.pill} ${item.status === 'Ongoing' ? styles.pillPulse : ''}`}
-                >
-                  {item.status}
-                </span>
-              </div>
-              <h3 className={styles.cardTitle}>{item.title}</h3>
-              {item.completedDate ? (
-                <p className={styles.status}>{item.completedDate}</p>
-              ) : null}
-              <p className={styles.description}>{item.description}</p>
-              {item.badge || item.certificatePdf ? (
-                <div className={styles.cardFooter}>
-                  {item.badge ? (
-                    <img
-                      src={item.badge}
-                      alt={`${item.title} badge`}
-                      className={styles.cardBadge}
-                      loading="lazy"
-                      onError={(event) => {
-                        event.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  ) : null}
-                  {item.certificatePdf ? (
-                    <a
-                      href={item.certificatePdf}
-                      className="btn btn--primary"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FiFileText aria-hidden="true" />
-                      View Certificate
-                    </a>
-                  ) : null}
-                </div>
-              ) : null}
-            </motion.article>
-          ))}
+        <div className={styles.layout}>
+          {featured ? <CertCard item={featured} featured index={0} /> : null}
+          <div className={styles.grid}>
+            {rest.map((item, index) => (
+              <CertCard key={item.id} item={item} index={index + 1} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

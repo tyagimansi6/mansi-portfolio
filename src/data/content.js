@@ -4,6 +4,8 @@ export const site = {
   title: 'Mansi Tyagi | Portfolio',
   description:
     'Mansi Tyagi — Computer Science Engineering Student, Frontend Developer, and UI/UX Enthusiast.',
+  positioning: 'Computer Science Student & Full-Stack Developer',
+  statusBadge: 'Open to Internship Opportunities',
   email: 'archanatyagi209@gmail.com',
   github: 'https://github.com/tyagimansi6',
   linkedin: 'https://www.linkedin.com/in/mansityagi6',
@@ -28,6 +30,7 @@ export const about = {
     { value: 4, label: 'Projects Built', suffix: '+' },
     { value: 13, label: 'Skills', suffix: '+' },
   ],
+  highlights: [{ id: 'codechef', label: 'CodeChef', value: '3★' }],
 };
 
 export const education = [
@@ -60,6 +63,14 @@ export const education = [
 
 export const skills = [
   {
+    category: 'Languages',
+    items: [
+      { name: 'C++', level: 85 },
+      { name: 'Python', level: 80 },
+      { name: 'JavaScript', level: 88 },
+    ],
+  },
+  {
     category: 'Frontend',
     items: [
       { name: 'HTML', level: 95 },
@@ -69,16 +80,14 @@ export const skills = [
     ],
   },
   {
-    category: 'Backend & Languages',
+    category: 'Backend',
     items: [
-      { name: 'C++', level: 85 },
-      { name: 'Python', level: 80 },
       { name: 'Node.js', level: 78 },
       { name: 'Express.js', level: 75 },
     ],
   },
   {
-    category: 'Tools & Other',
+    category: 'Tools',
     items: [
       { name: 'Git', level: 88 },
       { name: 'GitHub', level: 90 },
@@ -93,16 +102,29 @@ export const projectFilters = ['All', 'Frontend', 'JavaScript', 'React', 'Full S
 
 export const projects = [
   {
+    id: 'realtime-chat',
+    number: '01',
+    title: 'Real-Time Chat Application',
+    description:
+      'Built a full-stack real-time messaging platform with secure JWT authentication, protected APIs, user-to-user conversations and real-time communication. Integrated MongoDB for persistent chat data and Socket.IO for live messaging, with additional support for video calling, notifications, media sharing and message translation.',
+    tags: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'JWT'],
+    categories: ['Full Stack', 'React', 'JavaScript'],
+    featured: true,
+    sourceUrl: 'https://github.com/tyagimansi6/realtime-chat-app',
+  },
+  {
     id: 'devconnect',
+    number: '02',
     title: 'DevConnect – Developer Collaboration Platform',
     description:
       'A platform where developers can create profiles, showcase projects, connect with peers, share posts, and collaborate on coding projects.',
     tags: ['Profiles', 'Collaboration', 'Social'],
     categories: ['Full Stack'],
-    featured: true,
+    featured: false,
   },
   {
     id: 'expense-tracker',
+    number: '03',
     title: 'Expense Tracker with Analytics',
     description:
       'Income and expense tracking with charts, reports, and a responsive UI for clear financial insights.',
@@ -112,6 +134,7 @@ export const projects = [
   },
   {
     id: 'task-tracker',
+    number: '04',
     title: 'Task Tracker',
     description:
       'A task management app with full CRUD operations, responsive design, and a modern UI.',
@@ -121,6 +144,7 @@ export const projects = [
   },
   {
     id: 'portfolio',
+    number: '05',
     title: 'Personal Portfolio Website',
     description:
       'A responsive personal portfolio featuring a clean light theme, glassmorphism cards, and smooth animations.',

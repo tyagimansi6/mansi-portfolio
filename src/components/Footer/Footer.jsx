@@ -20,7 +20,7 @@ export default function Footer() {
         </a>
 
         <p className={styles.copy}>
-          © {year} {site.name}. Crafted with care.
+          © {year} {site.name}
         </p>
 
         <div className={styles.socials}>

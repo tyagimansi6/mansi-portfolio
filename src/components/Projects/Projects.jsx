@@ -1,50 +1,95 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { FiExternalLink, FiGithub, FiMessageSquare } from 'react-icons/fi';
 import { projectFilters, projects } from '../../data/content';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import styles from './Projects.module.css';
 
+function ProjectVisual({ project, featured }) {
+  if (project.image) {
+    return (
+      <div className={`${styles.visual} ${featured ? styles.visualFeatured : ''}`}>
+        <img
+          src={project.image}
+          alt={`${project.title} preview`}
+          className={styles.image}
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`${styles.visual} ${styles.visualPlaceholder} ${featured ? styles.visualFeatured : ''}`}
+      aria-hidden="true"
+    >
+      <span className={styles.visualGlow} />
+      <FiMessageSquare className={styles.visualIcon} />
+      <span className={styles.visualLabel}>
+        {project.categories?.includes('Full Stack') ? 'Full Stack' : 'Project'}
+      </span>
+    </div>
+  );
+}
+
 function ProjectCard({ project, featured = false, index = 0 }) {
   const reducedMotion = usePrefersReducedMotion();
-  const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const onMove = (event) => {
-    if (reducedMotion || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width;
-    const py = (event.clientY - rect.top) / rect.height;
-    setTilt({
-      x: (0.5 - py) * 8,
-      y: (px - 0.5) * 10,
-    });
-  };
-
-  const onLeave = () => setTilt({ x: 0, y: 0 });
+  const showVisual = featured || Boolean(project.image);
 
   return (
     <motion.article
-      ref={cardRef}
       className={`glass-card ${styles.card} ${featured ? styles.featured : ''}`}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
       initial={reducedMotion ? false : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
     >
-      {featured ? <span className={styles.badge}>Featured</span> : null}
-      <h3 className={styles.title}>{project.title}</h3>
-      <p className={styles.description}>{project.description}</p>
-      <ul className={styles.tags}>
-        {project.tags.map((tag) => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
+      {showVisual ? <ProjectVisual project={project} featured={featured} /> : null}
+
+      <div className={styles.body}>
+        <div className={styles.cardTop}>
+          {project.number ? <span className={styles.number}>{project.number}</span> : null}
+          {featured ? <span className={styles.badge}>Featured Full Stack</span> : null}
+        </div>
+
+        <h3 className={styles.title}>{project.title}</h3>
+        <p className={styles.description}>{project.description}</p>
+
+        <ul className={styles.tags}>
+          {project.tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+
+        {project.liveUrl || project.sourceUrl ? (
+          <div className={styles.actions}>
+            {project.sourceUrl ? (
+              <a
+                href={project.sourceUrl}
+                className="btn btn--ghost"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FiGithub aria-hidden="true" />
+                GitHub
+              </a>
+            ) : null}
+            {project.liveUrl ? (
+              <a
+                href={project.liveUrl}
+                className="btn btn--primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FiExternalLink aria-hidden="true" />
+                Live Demo
+              </a>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
     </motion.article>
   );
 }

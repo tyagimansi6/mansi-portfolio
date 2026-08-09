@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiMapPin, FiSend } from 'react-icons/fi';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FiMail, FiSend } from 'react-icons/fi';
 import { site } from '../../data/content';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -75,37 +76,52 @@ export default function Contact() {
       <div className="container">
         <SectionHeader
           eyebrow="Contact"
-          title="Let's build something"
+          title="Let's build something together."
           subtitle="Have a role, project, or collaboration in mind? Send a note."
         />
 
         <div className={styles.layout}>
           <motion.div
             className={`glass-card ${styles.details}`}
-            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h3 className={styles.detailsTitle}>Contact details</h3>
+            <h3 className={styles.detailsTitle}>Get in touch</h3>
+            <p className={styles.detailsLead}>
+              Prefer email or social? Reach out through any of these channels.
+            </p>
+
             <a href={`mailto:${site.email}`} className={styles.detail}>
               <FiMail aria-hidden="true" />
               <span>{site.email}</span>
             </a>
-            <p className={styles.detail}>
-              <FiMapPin aria-hidden="true" />
-              <span>Open to remote / hybrid opportunities</span>
-            </p>
-            <p className={styles.note}>
-              Prefer LinkedIn or GitHub? Use the profile links above — I usually respond within a few days.
-            </p>
+            <a
+              href={site.github}
+              className={styles.detail}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub aria-hidden="true" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href={site.linkedin}
+              className={styles.detail}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedin aria-hidden="true" />
+              <span>LinkedIn</span>
+            </a>
           </motion.div>
 
           <motion.form
             className={`glass-card ${styles.form}`}
             onSubmit={onSubmit}
             noValidate
-            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
